@@ -512,7 +512,7 @@ if [ ${INPUT_PUBLISH3_REPO} != "null" ]; then
   else
     echo "PUBLISH3_REMOVE_LAST_BUILD default true"
   fi
-  if [ "${INPUT_PUBLISH3_COMMIT_HISTORY}" = "false" -a "${INPUT_PUBLISH3_PUSH_FORCE}" = "false" ] ; then
+  if [ "${INPUT_PUBLISH3_COMMIT_HISTORY}" = "false" -a "${INPUT_PUBLISH3_PUSH_FORCE}" = "false" ]; then
     print_error "3108-3: You set publish3_commit_history:false, must set publish3_push_force:true at same time"
   fi
 else
@@ -558,13 +558,13 @@ if [ $? -eq 0 ]; then  # clone success
     cd local_source_temp
     # https://serverfault.com/a/401450
     git ls-tree -r --name-only HEAD | while read filename; do
-      touch -d  "$(git log -1 --pretty=format:"%ai"  -- $filename  )"  $filename ;
+      touch -d  "$(git log -1 --pretty=format:"%ai"  -- $filename  )"  $filename;
     done
     cd ..
     print_info "Message: Source git clone success and time set success"
   fi
 
-  if [ ${INPUT_SOURCE_FILE_WITHOUT_PREFIX} = "true" ] ; then
+  if [ ${INPUT_SOURCE_FILE_WITHOUT_PREFIX} = "true" ]; then
     # remove the .git in source if exists
     rm -rf local_source_temp/${INPUT_SOURCE_DIR}/.git
 
@@ -594,17 +594,17 @@ fi
 if [ ${INPUT_SOURCE2_REPO} != "null" ]; then
   git clone -b ${INPUT_SOURCE2_BRANCH} https://${SOURCE2_GIT_NAME}:${SOURCE2_TOKEN}@${INPUT_SOURCE2_HUB}/${SOURCE2_REPO}.git  local_source2_temp
   if [ $? -eq 0 ]; then
-    if [ ${INPUT_SOURCE2_EDIT_TIME} = "true" ] ; then
+    if [ ${INPUT_SOURCE2_EDIT_TIME} = "true" ]; then
       cd local_source2_temp
       git ls-tree -r --name-only HEAD | while read filename; do
-        touch -d "$(git log -1 --pretty=format:"%ai" -- $filename )"  $filename ;
+        touch -d "$(git log -1 --pretty=format:"%ai" -- $filename )"  $filename;
       done
       cd ..
       print_info "Message: Source2 time set success"
     fi
 
     # default true, remove file without name like .nojekyll, may cause some errors
-    if [ ${INPUT_SOURCE2_FILE_WITHOUT_PREFIX} = "true" ] ; then
+    if [ ${INPUT_SOURCE2_FILE_WITHOUT_PREFIX} = "true" ]; then
       # remove the .git in source if exists
       rm -rf local_source2_temp/${INPUT_SOURCE2_DIR}/.git
       cp -rfp local_source2_temp/${INPUT_SOURCE2_DIR}/. local_source
@@ -711,7 +711,7 @@ else
 fi
 
 # install font
-if ${INPUT_GITBOOK_PDF} || ${INPUT_GITBOOK_EPUB} || ${INPUT_GITBOOK_MOBI} ; then
+if ${INPUT_GITBOOK_PDF} || ${INPUT_GITBOOK_EPUB} || ${INPUT_GITBOOK_MOBI}; then
   if [ -n "${INPUT_FONT_INSTALL}" ]; then
     apt-get update
     apt-get install sudo -y
@@ -726,30 +726,30 @@ gitbook build --gitbook=${GITBOOK_BUILD_VERSION}
 if [ $? -eq 0 ]; then
   print_info "Message: gitbook build success"
 else
-  # need plugins or README.md SUMMARY.md
-  print_warning "3303: gitbook build failed, maybe need some file or plugins, now we try again"
+  # need plugins
+  print_warning "3303: gitbook build failed, trying again with plugins"
   gitbook init
   gitbook install
   gitbook build --gitbook=${GITBOOK_BUILD_VERSION}
   if [ $? -eq 0 ]; then
-    # build again success with plugins
+    # build successful with plugins
     print_info "Message: gitbook build success (with plugins)"
   else
-    print_error "3105: gitbook build failed, please check is there something wrong with your book.json or others"
+    print_error "3105: gitbook build failed, please check is there something wrong with your book.json"
   fi
 fi
 
 
 # gitbook PDF
-if ${INPUT_GITBOOK_PDF} ; then
+if ${INPUT_GITBOOK_PDF}; then
   mkdir -p _book/${INPUT_GITBOOK_PDF_DIR}
   gitbook pdf ./  ./_book/${INPUT_GITBOOK_PDF_DIR}/${INPUT_GITBOOK_PDF_NAME}.pdf
 fi
-if ${INPUT_GITBOOK_EPUB} ; then
+if ${INPUT_GITBOOK_EPUB}; then
   mkdir -p _book/${INPUT_GITBOOK_EPUB_DIR}
   gitbook epub ./  ./_book/${INPUT_GITBOOK_EPUB_DIR}/${INPUT_GITBOOK_EPUB_NAME}.epub
 fi
-if ${INPUT_GITBOOK_MOBI} ; then
+if ${INPUT_GITBOOK_MOBI}; then
   mkdir -p _book/${INPUT_GITBOOK_MOBI_DIR}
   gitbook mobi ./  ./_book/${INPUT_GITBOOK_MOBI_DIR}/${INPUT_GITBOOK_MOBI_NAME}.mobi
 fi
@@ -766,10 +766,10 @@ echo "--------------------------------------------"
 if [ -f local_source/_book/CNAME ]; then
   rm -rf local_source/_book/CNAME;
   if [ $? -eq 0 ]; then
-    if [ "${INPUT_PUBLISH_CNAME}" != "null"  -o  "${INPUT_PUBLISH2_CNAME}" != "null"  -o  "${INPUT_PUBLISH3_CNAME}" != "null" ] ; then
+    if [ "${INPUT_PUBLISH_CNAME}" != "null" -o "${INPUT_PUBLISH2_CNAME}" != "null" -o "${INPUT_PUBLISH3_CNAME}" != "null" ]; then
       print_info "Message: Remove the CNAME (from source or source2) success"
     else
-      print_warning "3304: Remove the CNAME (from source or source2), if need cname please add in gitbook_action.yml publish_cname:value"
+      print_warning "3304: Remove the CNAME (from source or source2), if you need a CNAME please add 'publish_cname: value' in gitbook_action.yml"
     fi
   fi
 fi
@@ -781,7 +781,7 @@ fi
 #  I want use this config setting keep build history to get different time https://github.com/ZanderZhao/gitbook-action/issues/1
 #  But I fine it can't work, because some plugins still use the time when the action git clone src
 #  So I use https://github.com/Dream4ever/Knowledge-Base/issues/69 replace it like 'source_edit_time'
-if [ ${INPUT_PUBLISH_REMOVE_LAST_BUILD} = "true" ] ; then
+if [ ${INPUT_PUBLISH_REMOVE_LAST_BUILD} = "true" ]; then
   cd local_publish
   git rm -rf --ignore-unmatch  ./${INPUT_PUBLISH_DIR}/*
 #  git rm -rf --ignore-unmatch  ./${INPUT_PUBLISH_DIR}/.*
@@ -790,7 +790,7 @@ fi
 
 # if branch is new, need pubilsh_dir(if not /)  or rm by this action before
 # this is below INPUT_PUBLISH_REMOVE_LAST_BUILD -> https://github.com/ZanderZhao/gitbook-action/issues/5
-if [ ! -d "./local_publish/${INPUT_PUBLISH_DIR}" ] ; then
+if [ ! -d "./local_publish/${INPUT_PUBLISH_DIR}" ]; then
   mkdir ./local_publish/${INPUT_PUBLISH_DIR}
 fi
 
@@ -799,7 +799,7 @@ cp -rfp local_source/_book/.  local_publish/${INPUT_PUBLISH_DIR}
 cd local_publish
 
 # add CNAME which set in gitbook_action.yml
-if [ "${INPUT_PUBLISH_CNAME}" != "null" ]; then  # CNAME
+if [ "${INPUT_PUBLISH_CNAME}" != "null" ]; then
   # can set different cname with '\n' or '  ' between them
   echo "${INPUT_PUBLISH_CNAME}" | sed 's/ /\n/g' | sed '/^[  ]*$/d' > CNAME
   if [ $? -eq 0 ]; then
@@ -851,7 +851,7 @@ fi
 git push https://${PUBLISH_GIT_NAME}:${PUBLISH_TOKEN}@${INPUT_PUBLISH_HUB}/${PUBLISH_REPO}.git ${INPUT_PUBLISH_BRANCH}:${INPUT_PUBLISH_BRANCH}
 if [ $? -eq 0 ]; then
   print_info "Message: publish success"
-elif [ ${INPUT_PUBLISH_PUSH_FORCE}  = "true" ]  ; then
+elif [ ${INPUT_PUBLISH_PUSH_FORCE}  = "true" ]; then
   # try push force
   print_warning "3305: Can't push publish_repo/branch, try push force"
     git push --force https://${PUBLISH_GIT_NAME}:${PUBLISH_TOKEN}@${INPUT_PUBLISH_HUB}/${PUBLISH_REPO}.git ${INPUT_PUBLISH_BRANCH}:${INPUT_PUBLISH_BRANCH}
@@ -922,7 +922,7 @@ if [ ${INPUT_PUBLISH2_REPO} != "null" ]; then
   git push https://${PUBLISH2_GIT_NAME}:${PUBLISH2_TOKEN}@${INPUT_PUBLISH2_HUB}/${PUBLISH2_REPO}.git ${INPUT_PUBLISH2_BRANCH}:${INPUT_PUBLISH2_BRANCH}
   if [ $? -eq 0 ]; then
     print_info "Message: publish2 success"
-  elif [ ${INPUT_PUBLISH2_PUSH_FORCE}  = "true" ] ; then
+  elif [ ${INPUT_PUBLISH2_PUSH_FORCE}  = "true" ]; then
     print_warning "3305-2: Can't push publish2_repo/branch, try push force"
       git push --force https://${PUBLISH2_GIT_NAME}:${PUBLISH2_TOKEN}@${INPUT_PUBLISH2_HUB}/${PUBLISH2_REPO}.git ${INPUT_PUBLISH2_BRANCH}:${INPUT_PUBLISH2_BRANCH}
       if [ $? -eq 0 ]; then

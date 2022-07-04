@@ -24,7 +24,7 @@ jobs:
     - name: Checkout action
       uses: actions/checkout@v2
     - name: Gitbook Action
-      uses: meese-enterprises/gitbook-action@latest
+      uses: meese-enterprises/gitbook-action@master
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
 ```
@@ -472,7 +472,7 @@ jobs:
 
     # example1--> https://ZanderZhao.github.io/gitbook-action
     - name: Gitbook Action
-      uses: meese-enterprises/gitbook-action@latest
+      uses: meese-enterprises/gitbook-action@master
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         time_zone: Asia/Shanghai   # set time zone
@@ -482,7 +482,7 @@ jobs:
 
     # example2--> https://ZanderZhao.github.io/gitbook-action/gitbook-docs
     - name: Gitbook Action
-      uses: meese-enterprises/gitbook-action@latest
+      uses: meese-enterprises/gitbook-action@master
       with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         time_zone: Asia/Shanghai
