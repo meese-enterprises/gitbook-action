@@ -12,7 +12,7 @@ name: 'Gitbook Action Build'
 on:
   push:
     branches:
-      - master  # trigger branch
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
 
 ### **STEP3** Choose options   {#chooseoption}
 
-- **Set Default Above** 
+- **Set Default Above**
   - Source branch is `master`, and the target branch is `gh-pages`. If `gh-pages` does not exist, it will be created automatically.
 - **More Options And Example**.
   - Introduction  on  <https://ZanderZhao.github.io/gitbook-action/>
@@ -73,8 +73,3 @@ jobs:
     - Clean commit history
     - Keep time setting of file
     - ... ...
-
-
-
-
-

@@ -28,6 +28,3 @@
 * [WARNING](warning.md)
 * [Community](README.md#community)
 * [External links](README.md#external)
-
-
-

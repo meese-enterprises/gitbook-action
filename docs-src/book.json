@@ -17,11 +17,8 @@
     "copy-code-button@git+https://github.com/plugins-zander/gitbook-plugin-copy-code-button.git"
   ],
   "pluginsConfig": {
-    "gtag": {
-      "token": "UA-149127400-1"
-    },
     "edit-link": {
-      "base": "https://github.com/ZanderZhao/gitbook-action/edit/master/gitbook-source",
+      "base": "https://github.com/meese-enterprises/gitbook-action/edit/master/gitbook-source",
       "label": "EDIT"
     },
     "sitemap-general": {

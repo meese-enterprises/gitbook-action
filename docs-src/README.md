@@ -1,33 +1,32 @@
 # Gitbook Action
 
-This action builds and publishes a gitbook to github pages and other pages. [Click here for more information](https://ZanderZhao.github.io/gitbook-action). 
+This action builds and publishes a gitbook to github pages and other pages. [Click here for more information](https://ZanderZhao.github.io/gitbook-action).
 
 > [GitHub](https://github.com/ZanderZhao/gitbook-action) | [MarketPlace](https://github.com/marketplace/actions/gitbook-action) | [Page](https://ZanderZhao.github.io/gitbook-action/) | [Community](https://gitter.im/Gitbook-Action/community)
-
 
 
 ## How to Use
 
 ### **STEP1** Add Action
 
- Add `.github/workflows/gitbook-action.yml`in your repo, with  following content.
+Add `.github/workflows/gitbook-action.yml`in your repo, with  following content.
 
 ```yml
 name: 'Gitbook Action Build'
 on:
   push:
     branches:
-      - master  # trigger branch
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout action
       uses: actions/checkout@v2
-    - name: Gitbook Action                    # https://github.com/ZanderZhao/gitbook-action/releases
-      uses: ZanderZhao/gitbook-action@v1.2.4  # -> or ZanderZhao/gitbook-action@master.If not use master click above, use latest please 
-      with:                                   #    or fork this repo and use YourName/gitbook-action@master
-        token: ${{ secrets.PERSONAL_TOKEN }}  # -> remember add this in settings/secrets as following
+    - name: Gitbook Action
+      uses: meese-enterprises/gitbook-action@master
+      with:
+        token: ${{ secrets.PERSONAL_TOKEN }}
 ```
 
 ​    [Detailed step](https://zanderzhao.github.io/gitbook-action/how-to-use.html#addaction)  |  [Official introduction](https://help.github.com/cn/actions/getting-started-with-github-actions/starting-with-preconfigured-workflow-templates)
@@ -37,11 +36,11 @@ jobs:
 Create token from https://github.com/settings/tokens
 
 + choose repo
-+ click Generate token
++ click "Generate token"
 
 ​       [Detailed step](https://zanderzhao.github.io/gitbook-action/how-to-use.html#createtoken) |   [Official introduction](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token)
 
-Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
+Add your token to https://github.com/**yourname/yourrepo**/settings/secrets
 
 + Name: PERSONAL_TOKEN
 + Value: which you get before
@@ -60,13 +59,13 @@ Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
 
 + **git_name**:
 
-  + description: ' If git name is different with github, please add'
+  + description: 'If git name is different with GitHub, please add'
   + default: [GITHUB_ACTOR](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables)
 
 
 + **git_email:**
-+ description: ' If git name is different with github, please add'
-  
++ description: 'If git name is different with GitHub, please add'
+
 + default: [**@users.noreply.github.com](https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address#setting-your-commit-email-address-on-github)
 
 
@@ -90,9 +89,9 @@ Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
 
 + **source_hub**:
 + description: 'default is github.com,can be gitlib.com  gitee.com ...'
-  
+
 + default: 'github.com'
-  
+
 + **source_branch**:
 
   + description: 'Default master'
@@ -145,9 +144,9 @@ Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
 
 + **publish_hub**:
 + description: 'Default is github.com,can be gitlib.com gitee.com ...'
-  
+
 + default: 'github.com'
-  
+
 + **publish_branch**:
 
   + description: 'Defaule is gh-pages, auto create'
@@ -191,7 +190,7 @@ Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
 
   + default: true
 
-### For Gitbook Setting   {#gitbooksetting} 
+### For Gitbook Setting   {#gitbooksetting}
 
 + **gitbook_cli_version**:
 
@@ -457,7 +456,7 @@ Add your token to https://github.com/ **yourname/yourrepo** /settings/secrets
 ## Example  {#example}
 
 ```yml
-name: 'Gitbook-Action'
+name: "Gitbook-Action"
 
 on:
   push:
@@ -473,8 +472,8 @@ jobs:
 
     # example1--> https://ZanderZhao.github.io/gitbook-action
     - name: Gitbook Action
-      uses: zanderzhao/gitbook-action@v1.2.4 # https://github.com/ZanderZhao/gitbook-action/releases 
-      with:                                # Just example, click above, use latest please 
+      uses: meese-enterprises/gitbook-action@latest
+      with:
         token: ${{ secrets.PERSONAL_TOKEN }}
         time_zone: Asia/Shanghai   # set time zone
         source_dir: source         # clone from source
@@ -483,18 +482,16 @@ jobs:
 
     # example2--> https://ZanderZhao.github.io/gitbook-action/gitbook-docs
     - name: Gitbook Action
-      uses: zanderzhao/gitbook-action@v1.2.4
+      uses: meese-enterprises/gitbook-action@latest
       with:
-        token: ${{ secrets.PERSONAL_TOKEN }} 
+        token: ${{ secrets.PERSONAL_TOKEN }}
         time_zone: Asia/Shanghai
         source_repo: GitbookIO/gitbook    # clone from https://github.com/GitbookIO/gitbook.git
         source_branch: master             # clone source master
         source_dir: docs                  # gitbook-sorce at dir:docs
         publish_dir: gitbook-docs            # publish for this repo dir:gitbook-docs
         publish2_repo: gitbook-org/gitbook   # publish for another repo dir default root
-
 ```
-
 
 
 ## FAQ   {#faq}
@@ -510,7 +507,7 @@ jobs:
     + Add `source_edit_time: true`
 
 + About CNAME
-  +  How to add CNAME ?
+  +  How to add CNAME?
      +  Add `publish_cname: www.example.com`
      +  And add two CNAME like `publish_cname: example.com www.example.com`
         +  `example.com` and `www.example.com`should have space.
@@ -518,7 +515,7 @@ jobs:
 
 + About PDF/EPUB/MOBI
 
-  + How to build pdf ?
+  + How to build PDF?
     + Add `gitbook_pdf: true`
       + You can choose `gitbook_pdf_dir` and `gitbook_pdf_name`
       + [Detail](https://zanderzhao.github.io/gitbook-action/#gitbooksetting)
@@ -546,10 +543,10 @@ jobs:
   + This action **only change** the file in `publish_dir`
 + About work
   + Pull docker from [docker](https://hub.docker.com/r/zanderzhao/gitbook-action/dockerfile)
-    + In which Gitbook and Tools has installed 
-  + Clone from publish 
-    +  If exists publish2 and publish3 
-      + Then clone publish2 and publish3 
+    + In which Gitbook and Tools has installed
+  + Clone from publish
+    +  If exists publish2 and publish3
+      + Then clone publish2 and publish3
       + Mix publish, publish2 and publish3  together
   + Build
     + If exists plugins
@@ -565,14 +562,9 @@ jobs:
     + It will clean all things, If you need cache can set false, and you can find detail in OPTION above
 
 
-
-
-
 ## Community   {#community}
 
 [Gitter](https://gitter.im/Gitbook-Action/community)
-
-
 
 
 ## External links  {#external}
